@@ -1,0 +1,166 @@
+<!-- Layout | 布局 -->
+<!DOCTYPE HTML>
+<html>
+	<!--头部板块-->
+	<!-- _partial/header.ejs | 头部板块 -->
+<head>
+	<title>
+		
+			OPi服务器配置日志（六） - 
+		
+		Kizuna
+	</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+	
+		<!-- local source -->
+		<link rel="stylesheet" href="/css/main.css" />
+		<link rel="stylesheet" href="/css/icon_bilibili.css">
+		<noscript><link rel="stylesheet" href="/css/noscript.css" /></noscript>
+	
+
+	<!-- favicon -->
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+<meta name="generator" content="Hexo 5.1.1"></head>
+	<body class="is-preload is-preload-0 is-preload-1 is-preload-2" id="body">
+
+		<!-- Wrapper -->
+		<div id="wrapper" >
+
+			
+
+			<!-- _partial/logo.ejs | logo板块 -->
+<header id="header">
+	<a href="/" class="logo">Kizuna</a>
+</header>
+			<!-- _partial/nav.ejs | 导航栏板块 --> 
+<nav id="nav">
+	<ul class="links">
+		
+		    <li >
+		        <a href="/">Home</a>
+		    </li>
+	    
+		    <li >
+		        <a href="/archives/">Archives</a>
+		    </li>
+	    
+		    <li >
+		        <a href="/articles/">Articles</a>
+		    </li>
+	    
+		    <li >
+		        <a href="/albums/">Albums</a>
+		    </li>
+	    
+		    <li >
+		        <a href="/about/">About</a>
+		    </li>
+	    
+	</ul>
+	<ul class="icons">
+		<li><a target="_blank" rel="noopener" href="https://space.bilibili.com/136040948" class="icon icon-bilibili"><span class="label">Bilibili</span></a></li>
+		<li><a target="_blank" rel="noopener" href="https://github.com/Vestin7" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+	</ul>
+</nav>
+
+			<!-- Main -->
+			<div id="main">
+				<!--内容板块-->
+				<!-- Post | 文章 -->
+
+<section class="post">
+	<!-- _partial/aritcle.ejs | 文章内容板块 -->
+<article>
+	<header class="major">
+		
+			<span class="date">May 11, 2020</span>
+		
+		<h1>OPi服务器配置日志（六）</h1>
+		
+			<p>在OPi上搭建博客</p>
+		
+	</header>
+	
+		<div class="image main"><img src="/images/covers/cover_050620.jpg" alt="" /></div>
+	
+
+	<hr>
+<h2 id="建站"><a href="#建站" class="headerlink" title="建站"></a>建站</h2><p>[参考：使用Orange Pi Zero做小小服务器(hexo博客篇)|<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/0ef1c7695385]">https://www.jianshu.com/p/0ef1c7695385]</a><br>[参考：基于树莓派搭建Hexo博客部署到GitHub/Gitee|<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/4930c5ae697f]">https://www.jianshu.com/p/4930c5ae697f]</a><br>[参考：树莓派搭建 Hexo 博客（一）\使用 Hexo 直接在树莓派上生成静态页面|<a target="_blank" rel="noopener" href="https://www.cnblogs.com/imapla/p/5532985.html]">https://www.cnblogs.com/imapla/p/5532985.html]</a><br>（1）建站<br>在任意目录创建blog文件夹以存放博客文档，我选用在自己的home目录里，以此执行以下命令：<br>    $ mkdir blog<br>    $ cd blog<br>初始化Hexo：<br>    $ hexo init<br>初始化完成在目录下执行：<br>    $ npm install<br>至此，我们就可以启动Hexo了：<br>    $ hexo server<br>或者：<br>    $ hexo s<br>启动完成将出现如下提示：<br>vestin@orangepizero:~/blog$ hexo s<br>INFO  Start processing<br>INFO  Hexo is running at <a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000</a> . Press Ctrl+C to stop.<br>这时，可以在局域网的主机上输入[OrangePi的ip]:4000，即可打开博客。<br>按Ctrl-C可以退出服务。<br>（2）安装主题<br>鬼知道我找了多久的主题，我这人总是这样，扭扭捏捏的，不是块做大生意的料…<br>“勉强”让我满意的是melody主题，来自github账户 Molunerfinn 。<br>[Molunerfinn / hexo-theme-melody|<a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody]">https://github.com/Molunerfinn/hexo-theme-melody]</a><br>作者提供了配置文档：<br><a target="_blank" rel="noopener" href="https://molunerfinn.com/hexo-theme-melody-doc/">https://molunerfinn.com/hexo-theme-melody-doc/</a><br>！！注意！！<br>配置文件提到的_config.yml是下载下来的主题目录下的_config.yml而不是Hexo根目录下的_config.yml，否则将导致<br>    $ hexo g<br>命令报错：<br>Unhandled rejection TypeError: /…/Hexo/themes/melody/layout/includes/layout.pug:31<br>Cannot read property ‘css’ of undefined<br>[参考：配置Hexo主题之Melody|<a target="_blank" rel="noopener" href="https://aipynux.github.io/2019/02/03/%E9%85%8D%E7%BD%AEHexo%E4%B8%BB%E9%A2%98%E4%B9%8BMelody/#%E9%81%87%E5%88%B0%E9%97%AE%E9%A2%98]">https://aipynux.github.io/2019/02/03/%E9%85%8D%E7%BD%AEHexo%E4%B8%BB%E9%A2%98%E4%B9%8BMelody/#%E9%81%87%E5%88%B0%E9%97%AE%E9%A2%98]</a><br>（3）将本地Hexo博客部署到远端Github<br>[参考：使用 hexo+melody 主题搭建个人博客|<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_38378684/article/details/92830472]">https://blog.csdn.net/weixin_38378684/article/details/92830472]</a><br>i. 上传 GitHub<br>在github上新建一个仓库repository，注意仓库名字必须为：<br>    你的github账户名.github.io<br>因此我自己的就为：Vestin7.github.io<br>在博客根目录下执行命令：<br>    $ npm install –save hexo-deployer-git<br>然后我们需要配置博客根目录下的_config.yml文件：<br>    $ nano _config.yml<br>进入_config.yml后到文件末端，将此处修改为：</p>
+<h1 id="Deployment"><a href="#Deployment" class="headerlink" title="Deployment"></a>Deployment</h1><h2 id="Docs-https-hexo-io-docs-deployment-html"><a href="#Docs-https-hexo-io-docs-deployment-html" class="headerlink" title="Docs: https://hexo.io/docs/deployment.html"></a>Docs: <a target="_blank" rel="noopener" href="https://hexo.io/docs/deployment.html">https://hexo.io/docs/deployment.html</a></h2><p>deploy:<br>  type: git<br>  repo: <a target="_blank" rel="noopener" href="https://github.com/%E4%BD%A0%E7%9A%84%E8%B4%A6%E6%88%B7%E5%90%8D/%E4%BD%A0%E7%9A%84%E8%B4%A6%E6%88%B7%E5%90%8D.github.io">https://github.com/你的账户名/你的账户名.github.io</a><br>  branch: master<br>  #注意这里的冒号后要加空格<br>按Ctrl+X退出，按Y保存。<br>ii. 配置 SSH key<br>用git bash执行如下命令：<br>    $ cd ~/. ssh #检查本机已存在的ssh密钥<br>如果提示：No such file or directory 说明你是第一次使用git。<br>    $ ssh-keygen -t rsa -C “邮箱地址”<br>[参考：ssh-keygen 基本用法|<a target="_blank" rel="noopener" href="https://www.liaohuqiu.net/cn/posts/ssh-keygen-abc/]">https://www.liaohuqiu.net/cn/posts/ssh-keygen-abc/]</a><br>一直回车，最终会生成一个文件在用户目录下，打开用户目录，找到 .ssh\id_rsa.pub 文件，记事本打开并复制里面的内容，打开你的github主页，进入个人设置 -&gt; SSH and GPG keys -&gt; New SSH key，将刚复制的内容粘贴到key那里，title随便填，保存。<br>此时还需要配置：<br>    $ git config –global user.name “wmouren”// 你的github用户名，非昵称<br>    $ git config –global user.email  “<a href="mailto:&#x78;&#120;&#120;&#64;&#113;&#x71;&#x2e;&#x63;&#111;&#109;">&#x78;&#120;&#120;&#64;&#113;&#x71;&#x2e;&#x63;&#111;&#109;</a>“// 填写你的github注册邮箱<br>我的填写：<br>    $ git config –global user.name “Vestin7”<br>    $ git config –global user.email  “<a href="mailto:&#118;&#x65;&#115;&#116;&#105;&#110;&#46;&#x67;&#101;&#x6d;&#64;&#x67;&#x6d;&#97;&#x69;&#x6c;&#46;&#99;&#x6f;&#x6d;">&#118;&#x65;&#115;&#116;&#105;&#110;&#46;&#x67;&#101;&#x6d;&#64;&#x67;&#x6d;&#97;&#x69;&#x6c;&#46;&#99;&#x6f;&#x6d;</a>“<br>最后执行，会要求输入Github的用户名和密码：<br>    $ hexo d<br>iii.绑定域名<br>[参考：github怎么绑定自己的域名？|严晟嘉|<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/31377141]">https://www.zhihu.com/question/31377141]</a><br>a. 同时在Github Pages 仓库和Hexo/source目录添加一个CNAME(一定要<em>大写</em>)文件，并保存一个域名：<br>blog.kizuna.ink<br>注意，其中只能包含一个顶级域名。<br>保存两个文件就不用担心每次执行<br>    $ hexo d<br>后导致CNAME被覆盖掉了。<br>b. 向 DNS 配置中添加记录<br>我只添加了一条CNAME记录，可以直接指向另一个域名：<br>blog    CNAME    Vestin7.github.io<br>c. 等待你的 DNS 配置生效<br>对DNS的配置不是立即生效的，过10分钟再去访问你的域名看看有没有配置成功 : )D<br>小插曲，这里我在没有执行<br>    $ hexo g<br>的情况下直接执行了<br>    $ hexo d<br>导致Github上的CNAME被覆盖，正确应该执行：<br>    $ hexo d -g<br>或者依次执行：<br>    $ hexo g<br>    $ hexo d<br>至此，被覆盖的问题将不再有。</p>
+<p>PS：通过公网访问的是Hexo在Github上上传的静态页面，因此可以不用OrangePi服务器在线，亦能访问博客网站。<br>PS：每次修改配置文件后都需要依次执行下列三条命令：<br>    $ hexo clean<br>    $ hexo g  # 或者hexo generate<br>    $ hexo s  # 或者hexo server<br>出现启动服务成功的提示后，即可打开博客查看效果。</p>
+<p>！！注意！！<br>此时的npm安装一定要在blog文件夹内进行，否则：<br>npm WARN saveError ENOENT: no such file or directory, open ‘/home/vestin/package.json’<br>npm notice created a lockfile as package-lock.json. You should commit this file.<br>npm WARN enoent ENOENT: no such file or directory, open ‘/home/vestin/package.json’<br>npm WARN vestin No description<br>npm WARN vestin No repository field.<br>npm WARN vestin No README data<br>npm WARN vestin No license field.<br>我自以为是的像apt那样的安装一样，其实不然，这因该和我刚才使用npm install命令有关，这个命令应该会创建以上错误提示的package.json文件，而没有这个步骤就会导致找不到这个文件，致使安装失败。</p>
+<hr>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/0ef1c7695385">使用Orange Pi Zero做小小服务器(hexo博客篇)</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42751918/article/details/100059138">HEXO +树莓派搭建个人博客</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/4930c5ae697f">基于树莓派搭建Hexo博客部署到GitHub/Gitee</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/imapla/p/5532985.html">树莓派搭建 Hexo 博客（一）</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_31877249/article/details/80607186">Linux下查看和添加PATH环境变量</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/1dd22f5b521a">/etc/profile - 环境变量</a></li>
+</ul>
+
+</article>
+
+</section>
+
+<footer>
+	<div class="pagination">
+		
+			<a href="/2020/08/27/Story2/" class="prev">Story2</a>
+		
+
+		
+			<a href="/2020/05/10/OPi%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97%EF%BC%88%E4%BA%94%EF%BC%89/" class="next">OPi服务器配置日志（五）</a>
+		
+	</div>
+</footer>
+
+			</div>
+
+			<!--尾部板块-->
+			<!-- _partial/footer.ejs | 尾部板块 -->
+<footer id="footer">
+	<section class="split contact">
+		<section>
+			<h3>Social</h3>
+			<ul class="icons alt">
+				<!--<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>-->
+				<!--<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>-->
+				<!--<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>-->
+				<li><a target="_blank" rel="noopener" href="https://space.bilibili.com/136040948" class="icon icon-bilibili"><span class="label">Bilibili</span></a></li>
+				<li><a target="_blank" rel="noopener" href="https://github.com/Vestin7" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+			</ul>
+		</section>
+	</section>
+</footer>
+
+<!-- Copyright -->
+<div id="copyright">
+	<ul><li>&copy; 2020</li><li><a href="/about/">Vestin</a></li></ul>
+</div>
+
+		</div>
+
+		<!--脚本板块-->
+		<!-- _partial/scripts.ejs | 脚本板块 -->
+
+
+	<!-- local source -->
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/jquery.scrollex.min.js"></script>
+	<script src="/js/jquery.scrolly.min.js"></script>
+	<script src="/js/browser.min.js"></script>
+	<script src="/js/breakpoints.min.js"></script>
+	<script src="/js/util.js"></script>
+	<script src="/js/main.js"></script>
+
+
+
+	</body>
+</html>

@@ -1,0 +1,192 @@
+<!-- Layout | 布局 -->
+<!DOCTYPE HTML>
+<html>
+	<!--头部板块-->
+	<!-- _partial/header.ejs | 头部板块 -->
+<head>
+	<title>
+		
+			OPi服务器配置日志（三） - 
+		
+		Kizuna
+	</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+	
+		<!-- local source -->
+		<link rel="stylesheet" href="/css/main.css" />
+		<link rel="stylesheet" href="/css/icon_bilibili.css">
+		<noscript><link rel="stylesheet" href="/css/noscript.css" /></noscript>
+	
+
+	<!-- favicon -->
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+<meta name="generator" content="Hexo 5.1.1"></head>
+	<body class="is-preload is-preload-0 is-preload-1 is-preload-2" id="body">
+
+		<!-- Wrapper -->
+		<div id="wrapper" >
+
+			
+
+			<!-- _partial/logo.ejs | logo板块 -->
+<header id="header">
+	<a href="/" class="logo">Kizuna</a>
+</header>
+			<!-- _partial/nav.ejs | 导航栏板块 --> 
+<nav id="nav">
+	<ul class="links">
+		
+		    <li >
+		        <a href="/">Home</a>
+		    </li>
+	    
+		    <li >
+		        <a href="/archives/">Archives</a>
+		    </li>
+	    
+		    <li >
+		        <a href="/articles/">Articles</a>
+		    </li>
+	    
+		    <li >
+		        <a href="/albums/">Albums</a>
+		    </li>
+	    
+		    <li >
+		        <a href="/about/">About</a>
+		    </li>
+	    
+	</ul>
+	<ul class="icons">
+		<li><a target="_blank" rel="noopener" href="https://space.bilibili.com/136040948" class="icon icon-bilibili"><span class="label">Bilibili</span></a></li>
+		<li><a target="_blank" rel="noopener" href="https://github.com/Vestin7" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+	</ul>
+</nav>
+
+			<!-- Main -->
+			<div id="main">
+				<!--内容板块-->
+				<!-- Post | 文章 -->
+
+<section class="post">
+	<!-- _partial/aritcle.ejs | 文章内容板块 -->
+<article>
+	<header class="major">
+		
+			<span class="date">May 8, 2020</span>
+		
+		<h1>OPi服务器配置日志（三）</h1>
+		
+			<p>OPi过热异常，安装Node.js</p>
+		
+	</header>
+	
+		<div class="image main"><img src="/images/covers/cover_050620.jpg" alt="" /></div>
+	
+
+	<hr>
+<h2 id="OrangePi服务器安装Node-js"><a href="#OrangePi服务器安装Node-js" class="headerlink" title="OrangePi服务器安装Node.js"></a>OrangePi服务器安装Node.js</h2><h3 id="1-下载安装包："><a href="#1-下载安装包：" class="headerlink" title="1. 下载安装包："></a>1. 下载安装包：</h3><p>进入官网的下载页面：<a target="_blank" rel="noopener" href="https://nodejs.org/en/download/">Node.js下载页</a>。</p>
+<p>选择 Current Last Features &gt; Linux Binaries &gt; ARMv7 。</p>
+<p>复制下载地址，并将 “https” 改为 “http” 。通过 <code>wget</code> 命令下载：</p>
+<pre><code>$ wget http://nodejs.org/dist/v12.16.3/node-v12.16.3-linux-armv7l.tar.xz</code></pre>
+<p>下载完成可用 <code>ls</code> 命令查看：</p>
+<pre><code>node-v12.16.3-linux-armv7l.tar.xz</code></pre>
+<h3 id="2-解压-tar-xz文件"><a href="#2-解压-tar-xz文件" class="headerlink" title="2. 解压*.tar.xz文件"></a>2. 解压*.tar.xz文件</h3><p>先使用 <code>xz -d *.tar.xz</code> 命令将 <code>*.tar.xz</code> 解压成 <code>*.tar</code> ：</p>
+<pre><code>$ xz -d node-v12.16.3-linux-armv7l.tar.xz</code></pre>
+<p>然后再用 <code>tar xvf *.tar</code> 来解包：</p>
+<pre><code>$ tar xvf node-v12.16.3-linux-armv7l.tar</code></pre>
+<h3 id="3-安装-npm-和-node-命令到系统命令"><a href="#3-安装-npm-和-node-命令到系统命令" class="headerlink" title="3. 安装 npm 和 node 命令到系统命令"></a>3. 安装 npm 和 node 命令到系统命令</h3><p>我的方法是将刚刚解压出来的 node-v12.16.3-linux-armv7l/ 文件夹重命名为 nodejs/ ，同时复制这个文件夹到 /usr/local/bin 目录下：</p>
+<pre><code>$ sudo mv node-v12.16.3-linux-armv7l /usr/local/bin/nodejs</code></pre>
+<p>之后用 <code>ln</code> 命令软连接到 /usr/local/bin ：</p>
+<pre><code>$ sudo ln -s  /usr/local/bin/nodejs/bin/node    /usr/local/bin/
+$ sudo ln -s  /usr/local/bin/nodejs/bin/npm    /usr/local/bin/</code></pre>
+<h3 id="4-验证安装是否成功："><a href="#4-验证安装是否成功：" class="headerlink" title="4. 验证安装是否成功："></a>4. 验证安装是否成功：</h3><pre><code>$ node -v
+$ npm -v</code></pre>
+<p>成功示例：</p>
+<pre><code>orangepi@OrangePi:~$ node -v
+v12.16.3
+orangepi@OrangePi:~$ npm -v
+6.14.4</code></pre>
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><p>连接方法之二：</p>
+<pre><code>$ export PATH=/*/node-v6.10.0-linux-armv7l/bin:$PATH</code></pre>
+<p>验证方法之二：</p>
+<pre><code>$ cd /usr/local/bin/
+$ ls -l</code></pre>
+<p>如果使用 <code>npm install -g</code> 进行全局安装时报错了可尝试：</p>
+<pre><code>$ npm install --unsafe-perm --verbose -g [要安装的模块名称]</code></pre>
+<h2 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h2><p>SSH 连接前发现 OrangePi 已处于断开网络连接状态，但网络指示灯的黄灯会每过一段时间后闪烁一次，呈现连接状态。拔下网线后，网络指示灯不会亮起，而重新插回网口，仍表现为拔插头之前一样的状态，且并没有恢复网络连接。</p>
+<p>异常出现时主机外壳温度甚高，随即拔下电源等待一小段时间后（并未完全冷却，外壳仍然烫手），再次上电，网络得以连接，但一分钟左右后再次失去连接，此段时间没有包括SSH连接的任何操作。</p>
+<p>将 OrangePi 再次断开电源及网口连接，方才发现主机底部外壳盖已严重变形，不难猜测为高温所致。将整个模块拆卸出来，塑料外壳与TF卡槽及八脚芯片（猜测为 EEPROM ）均产生了轻微的贴合，但并未对贴合的部件照成表面上的损伤，两张热敏贴纸在高温的作用下，已严重发黑。</p>
+<p>好在元件均无明显损伤，等待其冷却后再将 OrangePi 主板固定回外壳，并未装上扩展板和外壳盖，重新插上网线并上电， OrangePi 正常启动并成功连接网络，随即进行上述配置操作，直至配置完成，过程中再未出现断网现象。</p>
+<p>此次事故原因初步确认为散热不足，高温导致网卡芯片工作失效，但所幸并未到达损坏的程度，之后务必重视散热工作，以免再次发生类似状况。</p>
+<hr>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/9347c2f45323">使用Orange Pi Zero做小小服务器(Node.js篇)</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/nodejs/help/wiki/Installation">Installation · nodejs/help Wiki</a></li>
+</ul>
+
+</article>
+
+</section>
+
+<footer>
+	<div class="pagination">
+		
+			<a href="/2020/05/09/OPi%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97%EF%BC%88%E5%9B%9B%EF%BC%89/" class="prev">OPi服务器配置日志（四）</a>
+		
+
+		
+			<a href="/2020/05/07/OPi%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97%EF%BC%88%E4%BA%8C%EF%BC%89/" class="next">OPi服务器配置日志（二）</a>
+		
+	</div>
+</footer>
+
+			</div>
+
+			<!--尾部板块-->
+			<!-- _partial/footer.ejs | 尾部板块 -->
+<footer id="footer">
+	<section class="split contact">
+		<section>
+			<h3>Social</h3>
+			<ul class="icons alt">
+				<!--<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>-->
+				<!--<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>-->
+				<!--<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>-->
+				<li><a target="_blank" rel="noopener" href="https://space.bilibili.com/136040948" class="icon icon-bilibili"><span class="label">Bilibili</span></a></li>
+				<li><a target="_blank" rel="noopener" href="https://github.com/Vestin7" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+			</ul>
+		</section>
+	</section>
+</footer>
+
+<!-- Copyright -->
+<div id="copyright">
+	<ul><li>&copy; 2020</li><li><a href="/about/">Vestin</a></li></ul>
+</div>
+
+		</div>
+
+		<!--脚本板块-->
+		<!-- _partial/scripts.ejs | 脚本板块 -->
+
+
+	<!-- local source -->
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/jquery.scrollex.min.js"></script>
+	<script src="/js/jquery.scrolly.min.js"></script>
+	<script src="/js/browser.min.js"></script>
+	<script src="/js/breakpoints.min.js"></script>
+	<script src="/js/util.js"></script>
+	<script src="/js/main.js"></script>
+
+
+
+	</body>
+</html>

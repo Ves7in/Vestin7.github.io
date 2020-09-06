@@ -83,7 +83,7 @@
 		
 		<h1>OPi服务器配置日志（一）</h1>
 		
-			<p>OrangePi Zero博客服务器配置日志</p>
+			<p>OrangePi Zero博客服务器基础配置</p>
 		
 	</header>
 	
@@ -119,9 +119,10 @@
 <pre><code>$ sudo -s</code></pre>
 <p>查看磁盘大小命令：</p>
 <pre><code>$ df -h</code></pre>
-<p>获取root权限后输入命令,来调整磁盘大小：</p>
-<pre><code>$ fs_resize</code></pre>
-<p>提示错误：</p>
+<p>两条网络上常见的调整磁盘大小命令：</p>
+<pre><code>$ fs_resize
+$ resize_part</code></pre>
+<p>均提示未找到指令：</p>
 <pre><code>bash: fs_resize: command not found</code></pre>
 <p>以下为<a target="_blank" rel="noopener" href="http://www.orangepi.org/orangepibbsen/forum.php?mod=viewthread&tid=844#favatar8405">leejunguda</a>的解答，实测有效解决问题：</p>
 <blockquote>
@@ -240,7 +241,7 @@ $ sudo bash /usr/libexec/netdata-uninstaller.sh    // 卸载netdata</code></pre>
 <footer>
 	<div class="pagination">
 		
-			<a href="/2020/08/27/Story2/" class="prev">Story2</a>
+			<a href="/2020/05/07/OPi%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97%EF%BC%88%E4%BA%8C%EF%BC%89/" class="prev">OPi服务器配置日志（二）</a>
 		
 
 		

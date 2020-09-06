@@ -1,0 +1,191 @@
+<!-- Layout | 布局 -->
+<!DOCTYPE HTML>
+<html>
+	<!--头部板块-->
+	<!-- _partial/header.ejs | 头部板块 -->
+<head>
+	<title>
+		
+			OPi服务器配置日志（二） - 
+		
+		Kizuna
+	</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+	
+		<!-- local source -->
+		<link rel="stylesheet" href="/css/main.css" />
+		<link rel="stylesheet" href="/css/icon_bilibili.css">
+		<noscript><link rel="stylesheet" href="/css/noscript.css" /></noscript>
+	
+
+	<!-- favicon -->
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+<meta name="generator" content="Hexo 5.1.1"></head>
+	<body class="is-preload is-preload-0 is-preload-1 is-preload-2" id="body">
+
+		<!-- Wrapper -->
+		<div id="wrapper" >
+
+			
+
+			<!-- _partial/logo.ejs | logo板块 -->
+<header id="header">
+	<a href="/" class="logo">Kizuna</a>
+</header>
+			<!-- _partial/nav.ejs | 导航栏板块 --> 
+<nav id="nav">
+	<ul class="links">
+		
+		    <li >
+		        <a href="/">Home</a>
+		    </li>
+	    
+		    <li >
+		        <a href="/archives/">Archives</a>
+		    </li>
+	    
+		    <li >
+		        <a href="/articles/">Articles</a>
+		    </li>
+	    
+		    <li >
+		        <a href="/albums/">Albums</a>
+		    </li>
+	    
+		    <li >
+		        <a href="/about/">About</a>
+		    </li>
+	    
+	</ul>
+	<ul class="icons">
+		<li><a target="_blank" rel="noopener" href="https://space.bilibili.com/136040948" class="icon icon-bilibili"><span class="label">Bilibili</span></a></li>
+		<li><a target="_blank" rel="noopener" href="https://github.com/Vestin7" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+	</ul>
+</nav>
+
+			<!-- Main -->
+			<div id="main">
+				<!--内容板块-->
+				<!-- Post | 文章 -->
+
+<section class="post">
+	<!-- _partial/aritcle.ejs | 文章内容板块 -->
+<article>
+	<header class="major">
+		
+			<span class="date">May 7, 2020</span>
+		
+		<h1>OPi服务器配置日志（二）</h1>
+		
+			<p>备份系统，并转移到新存储卡</p>
+		
+	</header>
+	
+		<div class="image main"><img src="/images/covers/cover_050620.jpg" alt="" /></div>
+	
+
+	<hr>
+<h2 id="将系统从8GB存储卡转移到16GB存储卡"><a href="#将系统从8GB存储卡转移到16GB存储卡" class="headerlink" title="将系统从8GB存储卡转移到16GB存储卡"></a>将系统从8GB存储卡转移到16GB存储卡</h2><h3 id="1-备份系统"><a href="#1-备份系统" class="headerlink" title="1. 备份系统"></a>1. 备份系统</h3><h4 id="dd命令方法"><a href="#dd命令方法" class="headerlink" title="dd命令方法"></a>dd命令方法</h4><blockquote>
+<p>此方法在实际操作后并未成功，仅作记录。（<a href="#Win32-Disk-Imager-%E6%96%B9%E6%B3%95">成功方法</a>）</p>
+</blockquote>
+<p>用 <code>df</code> 命令查看挂载的位置，出现如下信息：</p>
+<pre><code>Filesystem     1K-blocks    Used Available Use% Mounted on
+...
+/dev/sda1       15549952      32  15549920   1% /media/usb0</code></pre>
+<p>用umount命令卸载掉usb0：</p>
+<pre><code>$ umount /media/usb0</code></pre>
+<p>再次用 <code>df</code> 命令，确认 usb0 的挂载点已被卸载掉。</p>
+<p>用 <code>dd</code> 命令把镜像写入磁盘。而在这里我们就不需要镜像了，直接把正在使用的存储卡dd过去</p>
+<pre><code>$ dd bs=4m if=/dev/mmcblk0 of=/dev/sda1</code></pre>
+<p>报错如下：</p>
+<pre><code>dd: invalid number: &#39;4m&#39;</code></pre>
+<p>参考 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/memorecool/p/4100759.html">memorecool</a> 的方法解决问题：</p>
+<blockquote>
+<p>e.g. sudo dd bs=1m if=2014-09-09-wheezy-raspbian.img of=/dev/disk4<br>This may result in an dd: invalid number ‘1m’ error if you have GNU coreutils installed. In that case you need to use 1M:<br>sudo dd bs=1M if=image.img of=/dev/DISK<br>This will take a few minutes.</p>
+</blockquote>
+<p>dd命令完成，提示如下：</p>
+<pre><code>1847+0 records in
+1847+0 records out
+7746879488 bytes (7.7 GB, 7.2 GiB) copied, 909.364 s, 8.5 MB/s</code></pre>
+<p>但是实测新卡无法启动， Windows 端读盘提示需要格式化，所以我暂时放弃此备份方法，直接使用 Win32 Disk Imager 进行备份。</p>
+<h4 id="Win32-Disk-Imager-方法"><a href="#Win32-Disk-Imager-方法" class="headerlink" title="Win32 Disk Imager 方法"></a>Win32 Disk Imager 方法</h4><p>创建备份用文件夹，在其中创建空文件，并改为 <code>.img</code> 后缀，例如：</p>
+<pre><code>X:\Systems\Orangepizero\Server_bak\Server_bak_202005070023_8GB.img</code></pre>
+<p>打开 Win32 Disk Imager ，选择刚刚创建的空镜像，选择原系统的磁盘，执行 “read” ，提示是否覆盖原文件，选择 “是” 。</p>
+<p>此方法备份成功，因为是磁盘镜像而非系统镜像，备份出来的文件大小几乎等同于原物理盘（8GB）大小，解决办法是将其添加压缩包，实测使用 7z 压缩后大小缩减为 490 MB。</p>
+<p>保持Win32 Disk Imager软件开启，弹出原系统盘，插入新卡（16GB），选择新卡盘符，直接执行 “write” 。</p>
+<p>写入成功后 Windows 自动识别磁盘成功，将新卡插入 OrangePi 并上电，系统成功启动。</p>
+<h3 id="2-再次重新划分Linux分区大小"><a href="#2-再次重新划分Linux分区大小" class="headerlink" title="2. 再次重新划分Linux分区大小"></a>2. 再次重新划分Linux分区大小</h3><p>使用 OrangePi 初配置的方法调整TF卡大小（2020.5.6&gt;4. TF卡大小调整）。</p>
+<hr>
+<h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><p>OrangePi已接通电源，上电期间尚无电源问题出现，即日起OrangePi将处于长期部署状态。</p>
+<p>随即静态IP等影响OrangePi高可用性的问题需尽快解决。</p>
+<hr>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
+<li><a target="_blank" rel="noopener" href="http://www.cirmall.com/bbs/thread-39663-1-1.html">【杂谈】在树莓派上将现有系统复制到新存储卡</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/memorecool/p/4100759.html">MAC下安装树莓派的镜像到SD卡中</a></li>
+</ul>
+
+</article>
+
+</section>
+
+<footer>
+	<div class="pagination">
+		
+			<a href="/2020/05/08/OPi%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97%EF%BC%88%E4%B8%89%EF%BC%89/" class="prev">OPi服务器配置日志（三）</a>
+		
+
+		
+			<a href="/2020/05/06/OPi%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97%EF%BC%88%E4%B8%80%EF%BC%89/" class="next">OPi服务器配置日志（一）</a>
+		
+	</div>
+</footer>
+
+			</div>
+
+			<!--尾部板块-->
+			<!-- _partial/footer.ejs | 尾部板块 -->
+<footer id="footer">
+	<section class="split contact">
+		<section>
+			<h3>Social</h3>
+			<ul class="icons alt">
+				<!--<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>-->
+				<!--<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>-->
+				<!--<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>-->
+				<li><a target="_blank" rel="noopener" href="https://space.bilibili.com/136040948" class="icon icon-bilibili"><span class="label">Bilibili</span></a></li>
+				<li><a target="_blank" rel="noopener" href="https://github.com/Vestin7" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+			</ul>
+		</section>
+	</section>
+</footer>
+
+<!-- Copyright -->
+<div id="copyright">
+	<ul><li>&copy; 2020</li><li><a href="/about/">Vestin</a></li></ul>
+</div>
+
+		</div>
+
+		<!--脚本板块-->
+		<!-- _partial/scripts.ejs | 脚本板块 -->
+
+
+	<!-- local source -->
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/jquery.scrollex.min.js"></script>
+	<script src="/js/jquery.scrolly.min.js"></script>
+	<script src="/js/browser.min.js"></script>
+	<script src="/js/breakpoints.min.js"></script>
+	<script src="/js/util.js"></script>
+	<script src="/js/main.js"></script>
+
+
+
+	</body>
+</html>

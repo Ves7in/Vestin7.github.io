@@ -1,0 +1,276 @@
+<!-- Layout | 布局 -->
+<!DOCTYPE HTML>
+<html>
+	<!--头部板块-->
+	<!-- _partial/header.ejs | 头部板块 -->
+<head>
+	<title>
+		
+			OPi服务器配置日志（四） - 
+		
+		Kizuna
+	</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+	
+		<!-- local source -->
+		<link rel="stylesheet" href="/css/main.css" />
+		<link rel="stylesheet" href="/css/icon_bilibili.css">
+		<noscript><link rel="stylesheet" href="/css/noscript.css" /></noscript>
+	
+
+	<!-- favicon -->
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+<meta name="generator" content="Hexo 5.1.1"></head>
+	<body class="is-preload is-preload-0 is-preload-1 is-preload-2" id="body">
+
+		<!-- Wrapper -->
+		<div id="wrapper" >
+
+			
+
+			<!-- _partial/logo.ejs | logo板块 -->
+<header id="header">
+	<a href="/" class="logo">Kizuna</a>
+</header>
+			<!-- _partial/nav.ejs | 导航栏板块 --> 
+<nav id="nav">
+	<ul class="links">
+		
+		    <li >
+		        <a href="/">Home</a>
+		    </li>
+	    
+		    <li >
+		        <a href="/archives/">Archives</a>
+		    </li>
+	    
+		    <li >
+		        <a href="/articles/">Articles</a>
+		    </li>
+	    
+		    <li >
+		        <a href="/albums/">Albums</a>
+		    </li>
+	    
+		    <li >
+		        <a href="/about/">About</a>
+		    </li>
+	    
+	</ul>
+	<ul class="icons">
+		<li><a target="_blank" rel="noopener" href="https://space.bilibili.com/136040948" class="icon icon-bilibili"><span class="label">Bilibili</span></a></li>
+		<li><a target="_blank" rel="noopener" href="https://github.com/Vestin7" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+	</ul>
+</nav>
+
+			<!-- Main -->
+			<div id="main">
+				<!--内容板块-->
+				<!-- Post | 文章 -->
+
+<section class="post">
+	<!-- _partial/aritcle.ejs | 文章内容板块 -->
+<article>
+	<header class="major">
+		
+			<span class="date">May 9, 2020</span>
+		
+		<h1>OPi服务器配置日志（四）</h1>
+		
+			<p>更换为Armbian系统</p>
+		
+	</header>
+	
+		<div class="image main"><img src="/images/covers/cover_050620.jpg" alt="" /></div>
+	
+
+	<hr>
+<blockquote>
+<p>昨天没来及进行运维工作，但通过路由器查看了 OrangePi 的运行情况，显示连接，心想只要连接就不会出现前天的问题，今天打开路由器后台也确认了 OrangePi 仍然处于正常连接的状态，为此安心，打开 SSH 连接成功，但输入完用户名和密码过后再无响应，也许久未提示断开连接，这让我很疑惑，打开 19999 端口查看 Netdata 主页，的确能够打开界面，但反常的是尽管页面没有卡住，但一直没有刷新监测数据，最近一次监测数据在2020年5月08日20:46:30，且时钟在停止接收监测数据后11秒也停止了刷新。种种迹象表明 OrangePi 这台服役不足一天的 “服务器” 再次罢工了……</p>
+</blockquote>
+<hr>
+<h2 id="饱受唾弃的Ubuntu"><a href="#饱受唾弃的Ubuntu" class="headerlink" title="饱受唾弃的Ubuntu"></a>饱受唾弃的Ubuntu</h2><p>查询了相关情况，网上也有类似的声音，归结起来是 Ubuntu 系统的原因。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://tieba.baidu.com/p/5848035946">orange pi 就是个垃圾</a></li>
+</ul>
+<blockquote>
+<p>幕后画圈的小石：默认的系统确实差了点,所以一直在用armbian。<br>葉隨風：这板子自带的系统确实是垃圾，PI 4 debian 没有显卡驱动 Ubuntu系统居然用的是安卓内核。</p>
+</blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://tieba.baidu.com/p/5848035946">Orange Pi 一两天就无响应，不知道硬件问题还是软件</a></li>
+</ul>
+<blockquote>
+<p>楼主|该用户隐身：系统用官网下载的Ubuntu server<br>斯凯无限：用armbian快，还稳定<br>回复|楼主|该用户隐身：已经用上armbian了，发热量小了很多。最后发现是供电电源问题，我是从htpc的u**口取的电，不稳定，不定时死机。更换成在插座上独立供电就正常了，已经持续运行一个多月。</p>
+</blockquote>
+<p>以上，归结原因，的确是因为我的 OrangePi 服务器所搭载的 Ubuntu 系统在稳定性上欠佳，而想要补救，最有效的办法是将系统换为 Armbian 。</p>
+<hr>
+<h2 id="补救"><a href="#补救" class="headerlink" title="补救"></a>补救</h2><p>打开<a target="_blank" rel="noopener" href="http://www.orangepi.org/">OrangePi官网</a>，依次浏览 Resources &gt; Downloads ，找到Orange Pi Zero专题（我这时打开官网时已经没有这个专题了，但打开 Orange Pi Zero LTS 专题里面的连接发现还能找到 Orange Pi Zero 的系统，不知道是高版本向下兼容还是专题名字吧 Orange Pi Zero 给忘记了…），找到 Armbian 并点击 <a target="_blank" rel="noopener" href="https://www.armbian.com/download/?tx_maker=xunlong">Download Now</a>。</p>
+<p>在 Armbian 官网找到 Orange Pi Zero 的专题，打开会有两个系统选项：</p>
+<pre><code>Armbian Buster
+Armbian Bionic</code></pre>
+<p>除开名字不同，介绍一模一样…学识尚浅的我再次上网寻求帮助：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.right.com.cn/FORUM/thread-734724-1-1.html">[N1盒子] 我想在N1上安装Armbian，请问debian_buster Ubuntu_bionic这几个版本应该选择那个？</a></li>
+</ul>
+<blockquote>
+<p>045514437：<br>建议新手就Ubuntu_bionic，资料多。</p>
+</blockquote>
+<blockquote>
+<p>rups：<br>开发代号<br>debian_buster  debian 10<br>Ubuntu_bionic  Ubuntu 18.04<br>Ubuntu_disco   Ubuntu 19.04<br>有desktop 就是桌面版没有就是server版</p>
+</blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://wfblog.net/archives/apt-armbian-bionic.html">如何正确地给Armbian-Bionic换源</a></li>
+</ul>
+<blockquote>
+<p>Weifeng：在官网下的Ubuntu Debian镜像也有些蜜汁问题，最后找到了Armbian<br>里面有Bionic和Buster之分，前者是Ubuntu，后者是Debian</p>
+</blockquote>
+<p>以上，选择 Armbian Bionic 下载。</p>
+<hr>
+<h2 id="脱胎换骨"><a href="#脱胎换骨" class="headerlink" title="脱胎换骨"></a>脱胎换骨</h2><p>似乎感受到我要将它“脱胎换骨”，这个时候打开 SSH 或是 Netdata 都无法连接了，但奇怪的是，路由器配置页仍然能看到 OrangePi 的网络连接（惊。</p>
+<p>休怪我无情，直接拔电源。</p>
+<p>就算它多么冷静，多努力控制自己的温度，这次也无济于事了。</p>
+<p>刚刚接受过洗礼的 TF 卡再次羞红了脸，不过这次很快。也该娴熟了。</p>
+<p>烧录完成。</p>
+<hr>
+<h2 id="娴熟"><a href="#娴熟" class="headerlink" title="娴熟"></a>娴熟</h2><h3 id="基础配置"><a href="#基础配置" class="headerlink" title="基础配置"></a>基础配置</h3><p><a href="#">&gt;&gt;之前的日志</a></p>
+<p>接下来我将按照之前的日志进行基础配置（没想到这么快就用上了之前的日志，该高兴呢？）。</p>
+<blockquote>
+<p>Armbian 登陆初始用户名：root 密码：1234</p>
+</blockquote>
+<p>进入即强制让用户修改 root 密码，密码错误三次将自动退出 SSH 。</p>
+<blockquote>
+<p>修改后的root用户密码：toorzero</p>
+</blockquote>
+<p>紧接着系统会建议用户创建一个普通用户，按 <code>Ctrl-C</code> 可以不设置直接退出，我这里设置了一个用户：</p>
+<blockquote>
+<p>普通用户名：Vestin 密码：Ves</p>
+</blockquote>
+<p>创建成功后要求填入基本信息：</p>
+<pre><code>Full Name []: Vestin
+Room Number []:
+Work Phone []:
+Home Phone []:
+Other []:</code></pre>
+<p>这是我之前用 Linux 没遇到过的，可以按 <code>Enter</code> 键逐条跳过，我只填写了第一条。</p>
+<p>进入系统第一条命令：</p>
+<pre><code>$ df -h</code></pre>
+<p>显然这次系统自动识别了TF卡的总大小，并已经扩展了分区，因此跳过 resize 过程。</p>
+<p>进入下一步。</p>
+<h3 id="软件更新"><a href="#软件更新" class="headerlink" title="软件更新"></a>软件更新</h3><p>等待更新的同时查了一下 Bionic ：</p>
+<p><strong>Ubuntu历史版本一览表</strong></p>
+<table>
+<thead>
+<tr>
+<th>版本号</th>
+<th>代号</th>
+<th>发布时间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>18.04 LTS</td>
+<td>Bionic Beaver</td>
+<td>2018/04/26</td>
+</tr>
+</tbody></table>
+<p>果然是我孤陋寡闻了，不过也学会了，以后遇到这种Linux发行版加上不理解的单词，多为其版本代号，有这样的思路就能很快区分其内核。</p>
+<p>Upgrade 完成时出现：</p>
+<pre><code>W: Operation was interrupted before it could finish</code></pre>
+<p>再次 Upgrade 提示已无需更新，但愿不会有什么问题。</p>
+<h3 id="更换国内源"><a href="#更换国内源" class="headerlink" title="更换国内源"></a>更换国内源</h3><pre><code>$ sudo nano /etc/apt/sources.list</code></pre>
+<p>网友提供的国内源：<a target="_blank" rel="noopener" href="https://my.oschina.net/u/4173440/blog/4268681">Armbian国内源(Ubuntu18.04 Bionic)</a></p>
+<p>复制粘贴 “Ubuntu 18.04 ARM” 下面的内容：</p>
+<pre><code># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic-updates main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic-updates main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic-backports main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic-backports main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic-security main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic-security main restricted universe multiverse</code></pre>
+<p>以上，使用 nano 文本编辑工具修改源，将系统默认的源逐条用“#”注释掉，再将国内源粘贴到文件末尾。 <code>Ctrl-X</code> 退出，<code>Y</code> 保存，<code>Enter</code> 确认文件名。最后执行：</p>
+<pre><code>$ sudo apt-get update
+$ sudo apt-get upgrade</code></pre>
+<p>确认源无误， apt 速度也有显著提升。</p>
+<h3 id="Samba-挂载"><a href="#Samba-挂载" class="headerlink" title="Samba 挂载"></a>Samba 挂载</h3><p>安装完成cifs-utils后，执行挂载出现下列错误：</p>
+<pre><code>mount error: cifs filesystem not supported by the system</code></pre>
+<ul>
+<li>来自<a target="_blank" rel="noopener" href="https://blog.csdn.net/yangwy012210/article/details/72967654">饬殇07</a>收集的资料：</li>
+</ul>
+<blockquote>
+<p>· 2.1 – The SMBv2.1 protocol that was introduced in Microsoft<br>Windows 7 and Windows Server 2008R2.<br>· 3.0 – The SMBv3.0 protocol that was introduced in Microsoft<br>Windows 8 and Windows Server 2012.</p>
+</blockquote>
+<p>最终执行如下命令成功挂载（去掉 passwd 参数，加上 “vers=2.1” ）：</p>
+<pre><code>$ mount.cifs //192.168.1.79/Documents /mnt/share -o user=Guest,vers=2.1</code></pre>
+<h3 id="安装-Netdata"><a href="#安装-Netdata" class="headerlink" title="安装 Netdata"></a>安装 Netdata</h3><p>缺少 cmake ，安装 cmake 过后成功完成安装</p>
+<hr>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/beee8054c560">Armbian 换国内源</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/yangwy012210/article/details/72967654">centos samba 挂载</a></li>
+</ul>
+
+</article>
+
+</section>
+
+<footer>
+	<div class="pagination">
+		
+			<a href="/2020/05/10/OPi%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97%EF%BC%88%E4%BA%94%EF%BC%89/" class="prev">OPi服务器配置日志（五）</a>
+		
+
+		
+			<a href="/2020/05/08/OPi%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97%EF%BC%88%E4%B8%89%EF%BC%89/" class="next">OPi服务器配置日志（三）</a>
+		
+	</div>
+</footer>
+
+			</div>
+
+			<!--尾部板块-->
+			<!-- _partial/footer.ejs | 尾部板块 -->
+<footer id="footer">
+	<section class="split contact">
+		<section>
+			<h3>Social</h3>
+			<ul class="icons alt">
+				<!--<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>-->
+				<!--<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>-->
+				<!--<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>-->
+				<li><a target="_blank" rel="noopener" href="https://space.bilibili.com/136040948" class="icon icon-bilibili"><span class="label">Bilibili</span></a></li>
+				<li><a target="_blank" rel="noopener" href="https://github.com/Vestin7" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+			</ul>
+		</section>
+	</section>
+</footer>
+
+<!-- Copyright -->
+<div id="copyright">
+	<ul><li>&copy; 2020</li><li><a href="/about/">Vestin</a></li></ul>
+</div>
+
+		</div>
+
+		<!--脚本板块-->
+		<!-- _partial/scripts.ejs | 脚本板块 -->
+
+
+	<!-- local source -->
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/jquery.scrollex.min.js"></script>
+	<script src="/js/jquery.scrolly.min.js"></script>
+	<script src="/js/browser.min.js"></script>
+	<script src="/js/breakpoints.min.js"></script>
+	<script src="/js/util.js"></script>
+	<script src="/js/main.js"></script>
+
+
+
+	</body>
+</html>
