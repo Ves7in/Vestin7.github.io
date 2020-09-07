@@ -129,28 +129,28 @@ $ resize_part</code></pre>
 <p>First<br>$ fdisk -l<br>and you should know the partition name…<br>and in my case..<br>$ fdisk -c /dev/mmcblk0<br>input ‘p’<br>and show information of partition…<br>may be…..taget partition is 2…..<br>input “d”       -&gt; deldet partition….<br>input “2”      -&gt; target delete partition…<br>ipput “np”     -&gt; set new partition information…<br>input “p”      -&gt;set primary<br>input “2”     -&gt; target partition…<br>and input first sector number…….<br>(above…you type “fdisk -l” and find that number ( /dev/mmcblk0p2 ‘s start number )<br>and request last sector….and push enter key….<br>and input “w”    -&gt;write partiotion information….<br>System show error ….ignore….<br>$ reboot<br>$ resize2fs /dev/mmcblk0p2<br>$ df- h<br>done</p>
 </blockquote>
 <p>解决过程如下：</p>
-<pre><code>$ fdisk –l    // 显示所有物理磁盘名称</code></pre>
+<pre><code>$ fdisk –l    # 显示所有物理磁盘名称</code></pre>
 <p>通常我们需要扩容的分区是<code>/dev/mmcblk0p2</code>，其中<code>/dev/mmcblk0</code>为物理磁盘名，其末尾<code>p2</code>表示2号分区。通过以上命令给出的信息可以判断，2号分区之前均为系统目录，而2号分区之后都是未分配的空间，了解这个将有助于你在其他情况下自己判断需要扩容的分区号。记录你需要扩容的磁盘名称，以及对应分区<code>p2</code>的起始 sector 信息，通常为表示范围的两个数字中小的那一个，同时记录<code>/dev/mmcblk0</code>磁盘的结束 sector 号。</p>
-<pre><code>$ fdisk -c /dev/mmcblk0    // 选择我们需要操作的磁盘/dev/mmcblk0</code></pre>
+<pre><code>$ fdisk -c /dev/mmcblk0    # 选择我们需要操作的磁盘/dev/mmcblk0</code></pre>
 <p>此命令后，我们将进入 <code>fdisk</code> 工具内的命令行：</p>
-<pre><code>p    // 显示所有分区信息，多数情况下我们此时需要操作的分区号为2
-d    // 进入删除分区命令
-2    // 选择我们需要操作的2号分区
-np   // 配置一个新的分区
-p    // 将新的分区配置为主分区(primary)
-2    // 对应上面删除的2号分区
-     // 这里填写原始2号分区的起始sector号
-     // 随后提示要求输入新的结束sector号，本着扩容的目的，输入磁盘的结束sector号即可
-w    // 立即执行刚刚配置的分区的修改操作，忽略ERROR提示</code></pre>
+<pre><code>p    # 显示所有分区信息，多数情况下我们此时需要操作的分区号为2
+d    # 进入删除分区命令
+2    # 选择我们需要操作的2号分区
+np   # 配置一个新的分区
+p    # 将新的分区配置为主分区(primary)
+2    # 对应上面删除的2号分区
+     # 这里填写原始2号分区的起始sector号
+     # 随后提示要求输入新的结束sector号，本着扩容的目的，输入磁盘的结束sector号即可
+w    # 立即执行刚刚配置的分区的修改操作，忽略ERROR提示</code></pre>
 <p>我们已经执行完了所有分区操作，回到Linux终端：</p>
-<pre><code>$ reboot    // 重启</code></pre>
+<pre><code>$ reboot    # 重启</code></pre>
 <p>重启完成后，使用 <code>resize2fs</code> 工具完成最终的操作：</p>
 <pre><code>$ resize2fs /dev/mmcblk0p2</code></pre>
 <p>此时可以使用 <code>df- h</code> 命令确认已完成磁盘扩容。</p>
 <hr>
 <h2 id="软件更新"><a href="#软件更新" class="headerlink" title="软件更新"></a>软件更新</h2><p>以下操作均需在root用户下完成。</p>
-<pre><code>$ apt-get update    // 检查更新
-$ apt-get upgrade   // 安装更新</code></pre>
+<pre><code>$ apt-get update    # 检查更新
+$ apt-get upgrade   # 安装更新</code></pre>
 <p>安装更新时报如下错误：</p>
 <pre><code>E: Could not get lock /var/lib/dpkg/lock - open (11: Resource temporarily unavailable) 
 E: Unable to lock the administration directory (/var/lib/dpkg/), is another process using it? </code></pre>
@@ -166,7 +166,7 @@ E: Unable to lock the administration directory (/var/lib/dpkg/), is another proc
 <p>使用 <code>ps</code> 和 <code>grep</code> 命令并用管道组合来得到含有 apt 或者 apt-get 的进程：</p>
 <pre><code>$ ps -A | grep apt</code></pre>
 <p>通过进程号杀掉列出的两个 apt 相关进程，以下方法选择其一：</p>
-<pre><code>$ sudo kill -9 processnumber    //9 是 SIGKILL 的信号数，它会杀掉第一个 apt 进程
+<pre><code>$ sudo kill -9 processnumber    # 9 是 SIGKILL 的信号数，它会杀掉第一个 apt 进程
 $ sudo kill -SIGKILL processnumber</code></pre>
 <p><strong>2. 删除锁定文件</strong></p>
 <p>首先运行下面的命令来移除 /var/lib/dpkg/ 文件夹下的锁定文件：</p>
@@ -219,12 +219,14 @@ $ sudo mount -t cifs //[address]/[folder] [mount point] -o user=[username],passw
 </ul>
 <p>再通过SMB共享至OrangePi端<br>依赖库检查通过，开始编译…<br>开始make…<br>开始bash…<br>终于…</p>
 <pre><code>enjoy real-time performance and health monitoring...</code></pre>
-<p>Ps: Netdata常用命令：</p>
-<pre><code>$ systemctl stop netdata    // 停止
-$ systemctl start netdata    // 启动
-$ systemctl restart netdata    // 重启
-$ systemctl enable netdata    // 开机启动
-$ sudo bash /usr/libexec/netdata-uninstaller.sh    // 卸载netdata</code></pre>
+<blockquote>
+<p>Netdata常用命令：</p>
+</blockquote>
+<pre><code>$ systemctl stop netdata       # 停止
+$ systemctl start netdata      # 启动
+$ systemctl restart netdata    # 重启
+$ systemctl enable netdata     # 开机启动
+$ sudo bash /usr/libexec/netdata-uninstaller.sh    # 卸载netdata</code></pre>
 <hr>
 <h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
 <li><strong>官方文档</strong>：<a target="_blank" rel="noopener" href="http://www.orangepi.cn/quickstartcn/startcn_2e17631567a387efd2a3d252fa79.html">香橙派快速入门指南</a></li>

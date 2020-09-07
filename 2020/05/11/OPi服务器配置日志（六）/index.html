@@ -91,18 +91,93 @@
 	
 
 	<hr>
-<h2 id="建站"><a href="#建站" class="headerlink" title="建站"></a>建站</h2><p>[参考：使用Orange Pi Zero做小小服务器(hexo博客篇)|<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/0ef1c7695385]">https://www.jianshu.com/p/0ef1c7695385]</a><br>[参考：基于树莓派搭建Hexo博客部署到GitHub/Gitee|<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/4930c5ae697f]">https://www.jianshu.com/p/4930c5ae697f]</a><br>[参考：树莓派搭建 Hexo 博客（一）\使用 Hexo 直接在树莓派上生成静态页面|<a target="_blank" rel="noopener" href="https://www.cnblogs.com/imapla/p/5532985.html]">https://www.cnblogs.com/imapla/p/5532985.html]</a><br>（1）建站<br>在任意目录创建blog文件夹以存放博客文档，我选用在自己的home目录里，以此执行以下命令：<br>    $ mkdir blog<br>    $ cd blog<br>初始化Hexo：<br>    $ hexo init<br>初始化完成在目录下执行：<br>    $ npm install<br>至此，我们就可以启动Hexo了：<br>    $ hexo server<br>或者：<br>    $ hexo s<br>启动完成将出现如下提示：<br>vestin@orangepizero:~/blog$ hexo s<br>INFO  Start processing<br>INFO  Hexo is running at <a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000</a> . Press Ctrl+C to stop.<br>这时，可以在局域网的主机上输入[OrangePi的ip]:4000，即可打开博客。<br>按Ctrl-C可以退出服务。<br>（2）安装主题<br>鬼知道我找了多久的主题，我这人总是这样，扭扭捏捏的，不是块做大生意的料…<br>“勉强”让我满意的是melody主题，来自github账户 Molunerfinn 。<br>[Molunerfinn / hexo-theme-melody|<a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody]">https://github.com/Molunerfinn/hexo-theme-melody]</a><br>作者提供了配置文档：<br><a target="_blank" rel="noopener" href="https://molunerfinn.com/hexo-theme-melody-doc/">https://molunerfinn.com/hexo-theme-melody-doc/</a><br>！！注意！！<br>配置文件提到的_config.yml是下载下来的主题目录下的_config.yml而不是Hexo根目录下的_config.yml，否则将导致<br>    $ hexo g<br>命令报错：<br>Unhandled rejection TypeError: /…/Hexo/themes/melody/layout/includes/layout.pug:31<br>Cannot read property ‘css’ of undefined<br>[参考：配置Hexo主题之Melody|<a target="_blank" rel="noopener" href="https://aipynux.github.io/2019/02/03/%E9%85%8D%E7%BD%AEHexo%E4%B8%BB%E9%A2%98%E4%B9%8BMelody/#%E9%81%87%E5%88%B0%E9%97%AE%E9%A2%98]">https://aipynux.github.io/2019/02/03/%E9%85%8D%E7%BD%AEHexo%E4%B8%BB%E9%A2%98%E4%B9%8BMelody/#%E9%81%87%E5%88%B0%E9%97%AE%E9%A2%98]</a><br>（3）将本地Hexo博客部署到远端Github<br>[参考：使用 hexo+melody 主题搭建个人博客|<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_38378684/article/details/92830472]">https://blog.csdn.net/weixin_38378684/article/details/92830472]</a><br>i. 上传 GitHub<br>在github上新建一个仓库repository，注意仓库名字必须为：<br>    你的github账户名.github.io<br>因此我自己的就为：Vestin7.github.io<br>在博客根目录下执行命令：<br>    $ npm install –save hexo-deployer-git<br>然后我们需要配置博客根目录下的_config.yml文件：<br>    $ nano _config.yml<br>进入_config.yml后到文件末端，将此处修改为：</p>
-<h1 id="Deployment"><a href="#Deployment" class="headerlink" title="Deployment"></a>Deployment</h1><h2 id="Docs-https-hexo-io-docs-deployment-html"><a href="#Docs-https-hexo-io-docs-deployment-html" class="headerlink" title="Docs: https://hexo.io/docs/deployment.html"></a>Docs: <a target="_blank" rel="noopener" href="https://hexo.io/docs/deployment.html">https://hexo.io/docs/deployment.html</a></h2><p>deploy:<br>  type: git<br>  repo: <a target="_blank" rel="noopener" href="https://github.com/%E4%BD%A0%E7%9A%84%E8%B4%A6%E6%88%B7%E5%90%8D/%E4%BD%A0%E7%9A%84%E8%B4%A6%E6%88%B7%E5%90%8D.github.io">https://github.com/你的账户名/你的账户名.github.io</a><br>  branch: master<br>  #注意这里的冒号后要加空格<br>按Ctrl+X退出，按Y保存。<br>ii. 配置 SSH key<br>用git bash执行如下命令：<br>    $ cd ~/. ssh #检查本机已存在的ssh密钥<br>如果提示：No such file or directory 说明你是第一次使用git。<br>    $ ssh-keygen -t rsa -C “邮箱地址”<br>[参考：ssh-keygen 基本用法|<a target="_blank" rel="noopener" href="https://www.liaohuqiu.net/cn/posts/ssh-keygen-abc/]">https://www.liaohuqiu.net/cn/posts/ssh-keygen-abc/]</a><br>一直回车，最终会生成一个文件在用户目录下，打开用户目录，找到 .ssh\id_rsa.pub 文件，记事本打开并复制里面的内容，打开你的github主页，进入个人设置 -&gt; SSH and GPG keys -&gt; New SSH key，将刚复制的内容粘贴到key那里，title随便填，保存。<br>此时还需要配置：<br>    $ git config –global user.name “wmouren”// 你的github用户名，非昵称<br>    $ git config –global user.email  “<a href="mailto:&#x78;&#120;&#120;&#64;&#113;&#x71;&#x2e;&#x63;&#111;&#109;">&#x78;&#120;&#120;&#64;&#113;&#x71;&#x2e;&#x63;&#111;&#109;</a>“// 填写你的github注册邮箱<br>我的填写：<br>    $ git config –global user.name “Vestin7”<br>    $ git config –global user.email  “<a href="mailto:&#118;&#x65;&#115;&#116;&#105;&#110;&#46;&#x67;&#101;&#x6d;&#64;&#x67;&#x6d;&#97;&#x69;&#x6c;&#46;&#99;&#x6f;&#x6d;">&#118;&#x65;&#115;&#116;&#105;&#110;&#46;&#x67;&#101;&#x6d;&#64;&#x67;&#x6d;&#97;&#x69;&#x6c;&#46;&#99;&#x6f;&#x6d;</a>“<br>最后执行，会要求输入Github的用户名和密码：<br>    $ hexo d<br>iii.绑定域名<br>[参考：github怎么绑定自己的域名？|严晟嘉|<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/31377141]">https://www.zhihu.com/question/31377141]</a><br>a. 同时在Github Pages 仓库和Hexo/source目录添加一个CNAME(一定要<em>大写</em>)文件，并保存一个域名：<br>blog.kizuna.ink<br>注意，其中只能包含一个顶级域名。<br>保存两个文件就不用担心每次执行<br>    $ hexo d<br>后导致CNAME被覆盖掉了。<br>b. 向 DNS 配置中添加记录<br>我只添加了一条CNAME记录，可以直接指向另一个域名：<br>blog    CNAME    Vestin7.github.io<br>c. 等待你的 DNS 配置生效<br>对DNS的配置不是立即生效的，过10分钟再去访问你的域名看看有没有配置成功 : )D<br>小插曲，这里我在没有执行<br>    $ hexo g<br>的情况下直接执行了<br>    $ hexo d<br>导致Github上的CNAME被覆盖，正确应该执行：<br>    $ hexo d -g<br>或者依次执行：<br>    $ hexo g<br>    $ hexo d<br>至此，被覆盖的问题将不再有。</p>
-<p>PS：通过公网访问的是Hexo在Github上上传的静态页面，因此可以不用OrangePi服务器在线，亦能访问博客网站。<br>PS：每次修改配置文件后都需要依次执行下列三条命令：<br>    $ hexo clean<br>    $ hexo g  # 或者hexo generate<br>    $ hexo s  # 或者hexo server<br>出现启动服务成功的提示后，即可打开博客查看效果。</p>
-<p>！！注意！！<br>此时的npm安装一定要在blog文件夹内进行，否则：<br>npm WARN saveError ENOENT: no such file or directory, open ‘/home/vestin/package.json’<br>npm notice created a lockfile as package-lock.json. You should commit this file.<br>npm WARN enoent ENOENT: no such file or directory, open ‘/home/vestin/package.json’<br>npm WARN vestin No description<br>npm WARN vestin No repository field.<br>npm WARN vestin No README data<br>npm WARN vestin No license field.<br>我自以为是的像apt那样的安装一样，其实不然，这因该和我刚才使用npm install命令有关，这个命令应该会创建以上错误提示的package.json文件，而没有这个步骤就会导致找不到这个文件，致使安装失败。</p>
+<h2 id="建站"><a href="#建站" class="headerlink" title="建站"></a>建站</h2><p>在任意目录创建 blog 文件夹以存放博客文档，我选用在自己的 home 目录里，依次执行以下命令：</p>
+<pre><code>$ mkdir blog    # 在选定目录下创建blog文件夹
+$ cd blog       # 进入blog文件夹，之后的所有操作都在这个文件夹内
+$ hexo init     # 初始化Hexo
+$ npm install   # 初始化完成在目录下执行</code></pre>
+<blockquote>
+<p>注意：之后的 npm 安装一定要在 “/blog” 文件夹内进行，否则：</p>
+<blockquote>
+<p>npm WARN saveError ENOENT: no such file or directory, open ‘/home/vestin/package.json’<br>npm notice created a lockfile as package-lock.json. You should commit this file.<br>npm WARN enoent ENOENT: no such file or directory, open ‘/home/vestin/package.json’<br>npm WARN vestin No description<br>npm WARN vestin No repository field.<br>npm WARN vestin No README data<br>npm WARN vestin No license field.</p>
+</blockquote>
+<p>我自以为像 apt 那样的安装一样，其实不然，这应该和我刚才使用 npm install 命令有关，这个命令会在运行目录创建以上错误提示的 package.json 文件，而没有这个步骤就会导致找不到这个文件，致使安装失败。</p>
+</blockquote>
+<p>至此，我们就可以启动Hexo了，以下两种方法任选其一：</p>
+<pre><code>$ hexo server
+$ hexo s</code></pre>
+<p>启动完成将出现如下提示：</p>
+<pre><code>vestin@orangepizero:~/blog$ hexo s
+INFO  Start processing
+INFO  Hexo is running at http://localhost:4000 . Press Ctrl+C to stop.</code></pre>
+<p>这时，在局域网的主机上输入 <code>[OrangePi的IP]:4000</code> 即可打开博客。回到 OrangePi 按 <code>Ctrl-C</code> 可以关闭服务。</p>
+<hr>
+<h2 id="安装melody主题"><a href="#安装melody主题" class="headerlink" title="安装melody主题"></a>安装melody主题</h2><p>鬼知道我找了多久的主题，我这人总是这样，扭扭捏捏的，不是块做大生意的料…</p>
+<p>最终我找到<font color="#fff">“勉强”</font>让我喜欢的是 melody 主题，来自 Github 账户 Molunerfinn 。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody">Molunerfinn / hexo-theme-melody</a></li>
+<li><a target="_blank" rel="noopener" href="https://molunerfinn.com/hexo-theme-melody-doc/">作者提供的配置文档</a></li>
+</ul>
+<blockquote>
+<p>注意：配置文档提到的 _config.yml 是下载下来的主题目录下的 _config.yml 而不是 Hexo 根目录 (blog) 下的 _config.yml ，修改错误将导致 <code>hexo g</code> 命令报以下类似错误：</p>
+<blockquote>
+<p>Unhandled rejection TypeError: /…/Hexo/themes/melody/layout/includes/layout.pug:31<br>Cannot read property ‘css’ of undefined</p>
+</blockquote>
+</blockquote>
+<hr>
+<h2 id="将本地Hexo博客部署到远端Github"><a href="#将本地Hexo博客部署到远端Github" class="headerlink" title="将本地Hexo博客部署到远端Github"></a>将本地Hexo博客部署到远端Github</h2><h3 id="上传-GitHub"><a href="#上传-GitHub" class="headerlink" title="上传 GitHub"></a>上传 GitHub</h3><p>在Github上新建一个仓库 (repository) ，注意仓库名字必须为：</p>
+<pre><code>你的Github账户名.github.io</code></pre>
+<p>因此我自己的就为：</p>
+<pre><code>Vestin7.github.io</code></pre>
+<p>在博客根目录下执行命令以添加部署功能：</p>
+<pre><code>$ npm install --save hexo-deployer-git</code></pre>
+<p>然后我们需要配置博客根目录下的 _config.yml 文件：</p>
+<pre><code>$ nano _config.yml</code></pre>
+<p>进入 _config.yml 后到文件末端，将此处修改为：</p>
+<pre><code># Deployment
+## Docs: https://hexo.io/docs/deployment.html
+deploy:
+  type: git
+  repo: https://github.com/你的Github账户名/你的Github账户名.github.io
+  branch: master</code></pre>
+<blockquote>
+<p>注意：这里的冒号后都要加空格。</p>
+</blockquote>
+<p>按 <code>Ctrl-X</code> 退出，按 <code>Y</code> 保存。</p>
+<h3 id="配置-SSH-key"><a href="#配置-SSH-key" class="headerlink" title="配置 SSH key"></a>配置 SSH key</h3><pre><code>$ cd ~/. ssh    # 检查本机是否已存在的ssh密钥</code></pre>
+<p>如果提示： “No such file or directory” 则执行以下命令 ：</p>
+<pre><code>$ ssh-keygen -t rsa -C &quot;xxx@xxx.com&quot;    # 邮箱地址</code></pre>
+<p>一直回车，最终会在用户目录下创建 <code>/.ssh</code> 文件夹，进入，找到 <code>.ssh/id_rsa.pub</code> 文件，记事本打开并复制里面的内容，打开你的 Github 主页，进入个人设置 &gt; SSH and GPG keys &gt; New SSH key ，将刚复制的内容粘贴到 “key” 那里， “title” 随便填，保存。</p>
+<p>此时回到OrangePi继续配置：</p>
+<pre><code>$ git config --global user.name &quot;xxx&quot;             # 你的github用户名，非昵称
+$ git config --global user.email &quot;xxx@xxx.com&quot;    # 填写你的github注册邮箱</code></pre>
+<p>最后执行如下命令，会要求输入 Github 的用户名和密码：</p>
+<pre><code>$ hexo d</code></pre>
+<p>执行完成后，就已经可以通过如下域名来访问我们的博客了：</p>
+<pre><code>你的Github账户名.github.io</code></pre>
+<h3 id="绑定域名"><a href="#绑定域名" class="headerlink" title="绑定域名"></a>绑定域名</h3><h4 id="1-向Github-Pages添加CNAME记录"><a href="#1-向Github-Pages添加CNAME记录" class="headerlink" title="1. 向Github Pages添加CNAME记录"></a>1. 向Github Pages添加CNAME记录</h4><p>同时在 Github Pages 仓库（即刚刚创建的名为“你的Github账户名.github.io”的仓库）和 blog/source 目录添加一个名为 “CNAME” 的文件，并保存一个域名，例如：</p>
+<pre><code>kizuna.ink</code></pre>
+<blockquote>
+<p>注意：文件名一定要大写，无后缀，且其中只能包含一个顶级域名。</p>
+</blockquote>
+<p>保存两个文件就不用担心每次执行 <code>hexo d</code> 后导致CNAME被覆盖掉了。</p>
+<h4 id="2-向-DNS-配置中添加记录"><a href="#2-向-DNS-配置中添加记录" class="headerlink" title="2. 向 DNS 配置中添加记录"></a>2. 向 DNS 配置中添加记录</h4><p>我只添加了一条 CNAME 记录，可以直接指向另一个域名：</p>
+<pre><code>blog    CNAME    Vestin7.github.io</code></pre>
+<h4 id="3-等待你的-DNS-配置生效"><a href="#3-等待你的-DNS-配置生效" class="headerlink" title="3. 等待你的 DNS 配置生效"></a>3. 等待你的 DNS 配置生效</h4><p>对DNS的配置不是立即生效的，过10分钟再去访问你的域名看看有没有配置成功，等待时间由自己域名设置的 TTL 时间决定。</p>
+<blockquote>
+<p>通过公网访问的是 Hexo 在 Github 上部署的静态页面，因此可以不用 OrangePi 服务器在线，亦能访问博客网站。</p>
+</blockquote>
+<p>出现启动服务成功的提示后，即可使用自己的域名访问博客，例如我上面的设置，域名如下：</p>
+<pre><code>blog.kizuna.ink</code></pre>
 <hr>
 <h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/0ef1c7695385">使用Orange Pi Zero做小小服务器(hexo博客篇)</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42751918/article/details/100059138">HEXO +树莓派搭建个人博客</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/4930c5ae697f">基于树莓派搭建Hexo博客部署到GitHub/Gitee</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/imapla/p/5532985.html">树莓派搭建 Hexo 博客（一）</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_31877249/article/details/80607186">Linux下查看和添加PATH环境变量</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/1dd22f5b521a">/etc/profile - 环境变量</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/imapla/p/5532985.html">树莓派搭建 Hexo 博客（一）\使用 Hexo 直接在树莓派上生成静态页面</a></li>
+<li><a target="_blank" rel="noopener" href="https://aipynux.github.io/2019/02/03/%E9%85%8D%E7%BD%AEHexo%E4%B8%BB%E9%A2%98%E4%B9%8BMelody/#%E9%81%87%E5%88%B0%E9%97%AE%E9%A2%98">配置Hexo主题之Melody</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_38378684/article/details/92830472">使用 hexo+melody 主题搭建个人博客</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.liaohuqiu.net/cn/posts/ssh-keygen-abc/">ssh-keygen 基本用法</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/31377141">github怎么绑定自己的域名？</a></li>
 </ul>
 
 </article>
