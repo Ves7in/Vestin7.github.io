@@ -701,8 +701,17 @@
 		newPara.innerHTML=data.innerHTML;
 		parent.appendChild(newPara);
 
+		// emoji
+			var str = document.getElementsByTagName("p");
+			for (var i = str.length - 1; i >= 0; i--) {
+				(str[i].innerHTML.match(/[^m\]]+(?=\[\/)/g) || []).forEach(item => {
+					var reg = "[em]" + item + "[/em]"
+					str[i].innerHTML = str[i].innerHTML.replace(reg, '<img style="height:16px;position:relative;top:2px;" src="http://qzonestyle.gtimg.cn/qzone/em/'+item+'.gif">');;
+				});
+			}
+
 		init();
 
-    })();
+	})();
 
 })(jQuery);

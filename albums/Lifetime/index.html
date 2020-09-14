@@ -2508,10 +2508,10 @@
 
 				<!-- Scripts -->
 				<script>
-					var script = document.createElement("script");
-					script.setAttribute("type","text/javascript");
-					script.src = "/js/album.js";
-					document.getElementsByTagName("head")[0].appendChild(script);
+					var script = document.createElement("script");					// 创建script标签
+					script.setAttribute("type","text/javascript");					// 添加script标签属性
+					script.src = "/js/album.js";									// 在标签中调用album.js
+					document.getElementsByTagName("head")[0].appendChild(script);	// 写到head标签内以加载album.js
 				</script>
 			</div>
 
